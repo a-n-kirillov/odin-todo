@@ -11,5 +11,12 @@ export default class ProjectsController {
     
     addProject(name) {
         const newList = new ToDoList(getUniqueId(), name)
+        this.model.addToDoList(newList)
+        this.view.render(this.model.toDoLists)
+    }
+
+    bindAddProjectButton() {
+        const addProjectButton = this.view.projectCreationForm.getAddProjectButton()
+        addProjectButton.addEventListener('click', e => this.addProject(this.view.projectCreationForm.getInputFieldValue()))
     }
 }

@@ -1,5 +1,5 @@
 import ToDoList from "./ToDoList"
-import getUniqueId from "./idGenerator"
+import getUniqueId from '../utility/idGenerator'
 
 export default class ToDoApp {
     constructor() {

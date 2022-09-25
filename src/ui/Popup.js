@@ -8,6 +8,7 @@ export default function setupPopup() {
 
     addOpenPopupEventListener()
     addClosePopupEventListener()
+    closeModalByClickingOutsideIt()
 }
 
 function createPopupWrapper() {
@@ -62,4 +63,16 @@ export function setModalContent(elementToAppend) {
     const modal = document.querySelector('#modal')
     modal.innerHTML = ''
     modal.appendChild(elementToAppend)
+}
+
+function closeModalByClickingOutsideIt() {
+    const overlay = document.querySelector('#overlay')
+    overlay.addEventListener('click', e => {
+        closeModal()
+    })
+}
+
+function isModalActive() {
+    const modal = document.querySelector('#modal')
+    return modal.classList.contains('active')
 }

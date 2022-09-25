@@ -1,4 +1,5 @@
-import { setModalContent } from './Popup' 
+import { setModalContent } from './Popup'
+import ProjectsController from '../controllers/ProjectsController'
 
 function projectItemFactory(id, projectName) {
     const projectItem = document.createElement('li')
@@ -9,19 +10,6 @@ function projectItemFactory(id, projectName) {
     `
     projectItem.setAttribute('id', id)
     return projectItem
-}
-
-function projectCreationFormFactory() {
-    const projectCreationForm = document.createElement('div')
-    projectCreationForm.classList.add('project-creation')
-
-    projectCreationForm.innerHTML = `
-        <label for="project-name-input">Project name:</label>
-        <input id="prject-name-input" type="text"/>
-        <button class="add-project close-popup">Add</button>
-        <button class="close-popup">Cancel</button>
-    `
-    return projectCreationForm
 }
 
 export default class ProjectsView {
@@ -80,5 +68,14 @@ class ProjectCreationForm {
     clearInput() {
         const formInput = this.element.querySelector('#project-name-input')
         formInput.value = ''
+    }
+
+    getAddProjectButton() {
+        return this.element.querySelector('.add-project')
+    }
+
+    getInputFieldValue() {
+        return this.element.querySelector('#project-name-input').value
+
     }
 }

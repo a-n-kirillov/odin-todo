@@ -9,12 +9,18 @@ export default class ProjectsController {
         this.view = projectsView
         this.setupAddProjectButton()
         this.setupProjectSelection()
+        this.setupEditProjectButton()
         this.renderProjects()
     }
     
     addProject(name) {
         const newList = new ToDoList(getUniqueId(), name)
         this.model.addToDoList(newList)
+        this.renderProjects()
+    }
+
+    editProject(id, newName) {
+        this.model.editToDoList(id, newName)
         this.renderProjects()
     }
 
@@ -25,6 +31,10 @@ export default class ProjectsController {
 
     setupAddProjectButton() {
         this.view.bindAddProjectButton(e => this.addProject(this.view.projectCreationForm.getInputFieldValue()))
+    }
+
+    setupEditProjectButton() {
+        this.view.bindEditProjectButton((id, newName) => this.editProject(id, newName))
     }
 
     setupProjectSelection() {

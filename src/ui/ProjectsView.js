@@ -5,8 +5,8 @@ function projectItemFactory(id, projectName) {
     const projectItem = document.createElement('li')
     projectItem.innerHTML = `
         <h4 class="project-name">${projectName}</h4>
-        <button class="edit-project">Edit</button>
-        <button class="delete-project">Delete</button>
+        <button class="edit-project open-popup">Edit</button>
+        <button class="delete-project open-popup">Delete</button>
     `
     projectItem.setAttribute('id', id)
     return projectItem
@@ -23,7 +23,9 @@ export default class ProjectsView {
     this.listElement = parentElement.querySelector('.project-list')
     this.addProjectButton = parentElement.querySelector('.add')
     this.projectCreationForm = new ProjectCreationForm()
+    this.projectEditionForm = new ProjectEditionForm()
     this._setupAddProjectButton()
+    this._setupEditProjectButton()
     }
 
     render(projects) {
@@ -46,6 +48,16 @@ export default class ProjectsView {
         })
     }
 
+    _setupEditProjectButton() {
+        this.listElement.addEventListener('click', e => {
+            this.projectEditionForm.clearInput()
+            const editProjectButton = e.target.closest('button.edit-project')
+            if (!editProjectButton) return
+            setModalContent(this.projectEditionForm.element)
+            this.idOfProjectBeingEditted = e.target.closest('li').id
+        })
+    }
+
     highlightProject(id) {
         const activeProject = this.listElement.querySelector(`li[id="${id}"]`)
         activeProject.classList.add('active-project')
@@ -56,10 +68,18 @@ export default class ProjectsView {
         addProjectButton.addEventListener('click', action)
     }
 
+    bindEditProjectButton(action) {
+        const editProjectButton = this.projectEditionForm.getEditProjectButton()
+        editProjectButton.addEventListener('click', e => {
+            action(this.idOfProjectBeingEditted, this.projectEditionForm.getInputFieldValue())
+        })
+    }
+
     bindProjectSelection(action) {
         this.listElement.addEventListener('click', e => {
             let projectListItem = e.target.closest('li')
             if (!projectListItem) return
+            if (e.target.tagName.toLowerCase() === 'button') return
             action(projectListItem.id)
         })
     }
@@ -95,5 +115,37 @@ class ProjectCreationForm {
     getInputFieldValue() {
         return this.element.querySelector('#project-name-input').value
 
+    }
+}
+
+class ProjectEditionForm {
+    constructor() {
+        this.element = this._createElement()
+    }
+
+    _createElement() {
+        const projectEditionForm = document.createElement('div')
+        projectEditionForm.classList.add('project-edition')
+    
+        projectEditionForm.innerHTML = `
+            <label for="project-name-input">New project name:</label>
+            <input id="project-name-input" type="text"/>
+            <button class="edit-project close-popup">Edit</button>
+            <button class="close-popup">Cancel</button>
+        `
+        return projectEditionForm
+    }
+
+    clearInput() {
+        const formInput = this.element.querySelector('#project-name-input')
+        formInput.value = ''
+    }
+
+    getEditProjectButton() {
+        return this.element.querySelector('.edit-project')
+    }
+
+    getInputFieldValue() {
+        return this.element.querySelector('#project-name-input').value
     }
 }

@@ -21,6 +21,12 @@ export default class ToDoApp {
         return this.toDoLists.find(list => list.id == id)
     }
 
+    editToDoList(id, newTitle) {
+        const listBeingEdited = this.getToDoList(id)
+        if (!listBeingEdited) return
+        listBeingEdited.setTitle(newTitle)
+    }
+
     setActiveList(id) {
         const selectedList = this.getToDoList(id)
         if (selectedList) {

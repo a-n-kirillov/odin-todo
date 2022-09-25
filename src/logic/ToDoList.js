@@ -12,4 +12,8 @@ export default class ToDoList {
     removeToDo(toDoId) {
         this.toDoItems = this.toDoItems.filter(toDoItem => toDoItem.id !== toDoId)
     }
+
+    setTitle(title) {
+        this.title = title
+    }
 }

@@ -65,7 +65,7 @@ export default class ProjectsView {
 
     bindAddProjectButton(action) {
         const addProjectButton = this.projectCreationForm.getAddProjectButton()
-        addProjectButton.addEventListener('click', action)
+        addProjectButton.addEventListener('click', e => action(this.projectCreationForm.getInputFieldValue()))
     }
 
     bindEditProjectButton(action) {

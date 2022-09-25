@@ -36,7 +36,7 @@ export default class ProjectsController {
     }
 
     setupAddProjectButton() {
-        this.view.bindAddProjectButton(e => this.addProject(this.view.projectCreationForm.getInputFieldValue()))
+        this.view.bindAddProjectButton(name => this.addProject(name))
     }
 
     setupEditProjectButton() {

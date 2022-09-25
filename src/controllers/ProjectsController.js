@@ -10,6 +10,7 @@ export default class ProjectsController {
         this.setupAddProjectButton()
         this.setupProjectSelection()
         this.setupEditProjectButton()
+        this.setupDeleteProjectButton()
         this.renderProjects()
     }
     
@@ -21,6 +22,11 @@ export default class ProjectsController {
 
     editProject(id, newName) {
         this.model.editToDoList(id, newName)
+        this.renderProjects()
+    }
+
+    removeProject(id) {
+        this.model.removeToDoList(id)
         this.renderProjects()
     }
 
@@ -37,12 +43,18 @@ export default class ProjectsController {
         this.view.bindEditProjectButton((id, newName) => this.editProject(id, newName))
     }
 
+    setupDeleteProjectButton() {
+        this.view.bindDeleteProjectButton(id => this.removeProject(id))
+    }
+
     setupProjectSelection() {
         this.view.bindProjectSelection(selectedListId => this.selectActiveProject(selectedListId))
     }
 
     renderProjects() {
-        this.view.render(this.model.toDoLists)
-        this.view.highlightProject(this.model.currentList.id)
+        this.view.render(this.model.toDoLists);
+        if (this.model.currentList != null) {
+            this.view.highlightProject(this.model.currentList.id)
+        }
     }
 }

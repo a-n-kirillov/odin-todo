@@ -11,10 +11,18 @@ export default class ToDoApp {
 
     addToDoList(toDoList) {
         this.toDoLists.push(toDoList)
+        if (this.toDoLists.length == 1) {
+            this.currentList = this.toDoLists[0]
+        }
     }
 
     removeToDoList(id) {
         this.toDoLists = this.toDoLists.filter(toDoList => toDoList.id !== id)
+        if (this.toDoLists.length > 0) {
+            this.currentList = this.toDoLists[0]
+        } else {
+            this.currentList = null
+        }
     }
 
     getToDoList(id) {

@@ -6,7 +6,7 @@ function projectItemFactory(id, projectName) {
     projectItem.innerHTML = `
         <h4 class="project-name">${projectName}</h4>
         <button class="edit-project open-popup">Edit</button>
-        <button class="delete-project open-popup">Delete</button>
+        <button class="delete-project">Delete</button>
     `
     projectItem.setAttribute('id', id)
     return projectItem
@@ -72,6 +72,15 @@ export default class ProjectsView {
         const editProjectButton = this.projectEditionForm.getEditProjectButton()
         editProjectButton.addEventListener('click', e => {
             action(this.idOfProjectBeingEditted, this.projectEditionForm.getInputFieldValue())
+        })
+    }
+
+    bindDeleteProjectButton(action) {
+        this.listElement.addEventListener('click', e => {
+            const pressedDeleteButton = e.target.closest('.delete-project')
+            if (!pressedDeleteButton) return
+            const pressedListItem = pressedDeleteButton.closest('li')
+            action(pressedListItem.id)
         })
     }
 

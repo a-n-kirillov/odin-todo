@@ -18,7 +18,7 @@ export default class ToDoApp {
     }
 
     getToDoList(id) {
-        return this.toDoLists.find(list => list.id = id)
+        return this.toDoLists.find(list => list.id == id)
     }
 
     setActiveList(id) {

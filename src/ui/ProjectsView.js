@@ -45,6 +45,24 @@ export default class ProjectsView {
             setModalContent(this.projectCreationForm.element)
         })
     }
+
+    highlightProject(id) {
+        const activeProject = this.listElement.querySelector(`li[id="${id}"]`)
+        activeProject.classList.add('active-project')
+    }
+
+    bindAddProjectButton(action) {
+        const addProjectButton = this.projectCreationForm.getAddProjectButton()
+        addProjectButton.addEventListener('click', action)
+    }
+
+    bindProjectSelection(action) {
+        this.listElement.addEventListener('click', e => {
+            let projectListItem = e.target.closest('li')
+            if (!projectListItem) return
+            action(projectListItem.id)
+        })
+    }
 }
 
 class ProjectCreationForm {

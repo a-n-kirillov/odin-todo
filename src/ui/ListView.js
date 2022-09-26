@@ -39,9 +39,11 @@ export default class ListView {
         this.removeDoneTasksButton = parentElement.querySelector('.remove-done-tasks')
 
         this.taskCreationForm = new TaskCreationForm()
+        this.taskEditionForm = new TaskEditionForm()
 
         this._setupAddTaskButton()
         this._setupDescriptionButton()
+        this._setupEditTaskButton()
     }
 
     render(tasks) {
@@ -69,6 +71,23 @@ export default class ListView {
         this.addTaskButton.addEventListener('click', e => {
             this.taskCreationForm.clear()
             setModalContent(this.taskCreationForm.element)
+        })
+    }
+
+    _setupEditTaskButton() {
+        this.listElement.addEventListener('click', e => {
+            this.taskEditionForm.clear()
+            const potentiallyPressedEditButton = e.target.closest('.edit-task') 
+            if (!potentiallyPressedEditButton) return
+            const pressedTask = potentiallyPressedEditButton.closest('li')
+            this.idOfTaskUnderEdition = pressedTask.id
+            this.taskEditionForm.loadValues(
+                pressedTask.querySelector('.task-name').textContent,
+                pressedTask.querySelector('.due-date').textContent,
+                pressedTask.querySelector('.priority').textContent.toLowerCase(),
+                this.tasksToDescriptionsMap[pressedTask.id]
+            )
+            setModalContent(this.taskEditionForm.element)
         })
     }
 
@@ -101,6 +120,18 @@ export default class ListView {
                 this.taskCreationForm.dueDatePicker.value,
                 this.taskCreationForm.prioritySelection.value,
                 this.taskCreationForm.taskDescription.value
+            )
+        })
+    }
+
+    bindEditTaskButton(action) {
+        this.taskEditionForm.confirmButton.addEventListener('click', e => {
+            action(
+                this.idOfTaskUnderEdition,
+                this.taskEditionForm.nameInput.value,
+                this.taskEditionForm.dueDatePicker.value,
+                this.taskEditionForm.prioritySelection.value,
+                this.taskEditionForm.taskDescription.value
             )
         })
     }
@@ -176,5 +207,24 @@ class TaskCreationForm extends TaskForm {
     constructor() {
         super()
         this.setConfirmButtonText('Add')
+    }
+}
+
+class TaskEditionForm extends TaskForm {
+    constructor() {
+        super()
+        this.setConfirmButtonText('Edit')
+    }
+
+    loadValues(
+        name,
+        date,
+        priority,
+        description
+    ) {
+        this.nameInput.value = name
+        this.dueDatePicker.value = date
+        this.prioritySelection.value = priority
+        this.taskDescription.value = description
     }
 }

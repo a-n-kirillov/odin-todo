@@ -124,3 +124,8 @@ table {
     font-size: 140%;
     font-weight: bolder;
   }
+
+  .to-do-list li {
+    display: flex;
+    gap: 20px;
+  }

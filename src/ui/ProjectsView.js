@@ -1,5 +1,4 @@
 import { setModalContent } from './Popup'
-import ProjectsController from '../controllers/ProjectsController'
 
 function projectItemFactory(id, projectName) {
     const projectItem = document.createElement('li')

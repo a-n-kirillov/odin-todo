@@ -16,4 +16,8 @@ export default class ToDoList {
     setTitle(title) {
         this.title = title
     }
+
+    getTask(id) {
+        return this.toDoItems.find(task => task.id == id)
+    }
 }

@@ -4,9 +4,10 @@ import ProjectsView from "../ui/ProjectsView"
 import getUniqueId from "../utility/idGenerator"
 
 export default class ProjectsController {
-    constructor(projectsModel, projectsView) {
+    constructor(projectsModel, projectsView, tasksController) {
         this.model = projectsModel
         this.view = projectsView
+        this.tasksController = tasksController
         this.setupAddProjectButton()
         this.setupProjectSelection()
         this.setupEditProjectButton()
@@ -33,6 +34,7 @@ export default class ProjectsController {
     selectActiveProject(id) {
         this.model.setActiveList(id)
         this.renderProjects()
+        this.tasksController.renderTasks()
     }
 
     setupAddProjectButton() {

@@ -3,7 +3,7 @@ import { setModalContent } from './Popup'
 function taskItemFactory(id, title, dueDate, priority) {
     const taskItem = document.createElement('li')
     taskItem.innerHTML = `
-        <input type="checkbox"/>
+        <input class="task-completion" type="checkbox"/>
         <h4 class="task-name">${title}</h4>
         <h4 class="due-date">${dueDate}</h4>
         <h4 class="priority">${priority}</h4>
@@ -48,8 +48,13 @@ export default class ListView {
         this._clear()
         tasks.forEach(task => {
             this._addTask(task.id, task.title, task.dueDate, task.priority)
+            this._setTaskCompletion(task.id, task.completed)
         })
         this._mapTasksToDescriptions(tasks)
+    }
+
+    _setTaskCompletion(id, newState) {
+        this.listElement.querySelector(`[id="${id}"]`).querySelector('.task-completion').checked = newState 
     }
 
     _addTask(id, title, dueDate, priority) {
@@ -98,6 +103,17 @@ export default class ListView {
                 this.taskCreationForm.taskDescription.value
             )
         })
+    }
+
+    bindCompletionCheckbox(action) {
+        this.listElement.addEventListener('click', e => {
+            if (!e.target.classList.contains('task-completion')) return;
+            action(this.getClosestListItemId(e.target), e.target.checked)
+        })
+    }
+
+    getClosestListItemId(childForWhichWeSearchClosestListItem) {
+        return childForWhichWeSearchClosestListItem.closest('li').id
     }
 }
 

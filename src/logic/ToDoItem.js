@@ -7,4 +7,8 @@ export default class ToDoItem {
         this.description = description
         this.completed = false
     }
+
+    setCompletionState(isTaskCompleted) {
+        this.completed = isTaskCompleted
+    }
 }

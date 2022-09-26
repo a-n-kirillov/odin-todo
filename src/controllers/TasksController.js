@@ -7,6 +7,7 @@ export default class TaskController {
         this.model = projectsModel
         this.view = tasksView
         this.setupAddTaskButton()
+        this.setupCompletionCheckbox()
     }
 
     renderTasks() {
@@ -21,7 +22,17 @@ export default class TaskController {
         this.renderTasks()
     }
 
+    changeCompletion(taskId, newState) {
+        const taskBeingChanged = this.model.currentList.getTask(taskId)
+        taskBeingChanged.setCompletionState(newState)
+        this.renderTasks()
+    }
+
     setupAddTaskButton() {
         this.view.bindAddTaskButton((name, dueDate, priority, description) => this.addTask(name, dueDate, priority, description))
+    }
+
+    setupCompletionCheckbox() {
+        this.view.bindCompletionCheckbox((taskId, newState) => this.changeCompletion(taskId, newState))
     }
 }

@@ -11,4 +11,16 @@ export default class ToDoItem {
     setCompletionState(isTaskCompleted) {
         this.completed = isTaskCompleted
     }
+
+    static createFromParsedJSON(parsedJSONObject) {
+        const retrievedToDoItem = new this(
+            parsedJSONObject.id,
+            parsedJSONObject.title,
+            parsedJSONObject.dueDate,
+            parsedJSONObject.priority,
+            parsedJSONObject.description
+        )
+        retrievedToDoItem.completed = parsedJSONObject.completed
+        return retrievedToDoItem
+    }
 }

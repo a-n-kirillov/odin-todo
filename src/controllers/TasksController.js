@@ -10,6 +10,7 @@ export default class TaskController {
         this.setupCompletionCheckbox()
         this.setupEditTaskButton()
         this.setupDeleteTaskButton()
+        this.renderTasks()
     }
 
     renderTasks() {

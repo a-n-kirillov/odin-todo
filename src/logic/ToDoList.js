@@ -1,3 +1,5 @@
+import ToDoItem from "./ToDoItem"
+
 export default class ToDoList {
     constructor(id, title) {
         this.id = id
@@ -19,5 +21,14 @@ export default class ToDoList {
 
     getTask(id) {
         return this.toDoItems.find(task => task.id == id)
+    }
+
+    static createFromParsedJSON(parsedJSONObject) {
+        const list = new this(parsedJSONObject.id, parsedJSONObject.title)
+        for (const parsedToDoItem of parsedJSONObject.toDoItems) {
+            list.addToDo(ToDoItem.createFromParsedJSON(parsedToDoItem))
+        }
+        
+        return list
     }
 }

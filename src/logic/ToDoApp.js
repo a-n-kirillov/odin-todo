@@ -40,6 +40,20 @@ export default class ToDoApp {
         if (selectedList) {
             this.currentList = selectedList
         }
+    }
 
+    static createFromParsedJSON(parsedJSONObject) {
+        const lists = new this()
+
+        if (parsedJSONObject == null) return lists;
+        // we don't need the default list
+        lists.toDoLists = []
+
+        for (const parsedToDoList of parsedJSONObject.toDoLists) {
+            lists.addToDoList(ToDoList.createFromParsedJSON(parsedToDoList))
+        }
+
+        lists.setActiveList(parsedJSONObject.currentList.id)
+        return lists
     }
 }

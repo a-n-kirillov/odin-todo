@@ -38,7 +38,7 @@ export default class ListView {
         this.addTaskButton = parentElement.querySelector('.add-to-do')
         this.removeDoneTasksButton = parentElement.querySelector('.remove-done-tasks')
 
-        this.taskCreationForm = new TaskForm('add')
+        this.taskCreationForm = new TaskCreationForm()
 
         this._setupAddTaskButton()
         this._setupDescriptionButton()
@@ -118,8 +118,7 @@ export default class ListView {
 }
 
 class TaskForm {
-    constructor(type) {
-        this.type = type
+    constructor() {
         this._createElement()
         this._addPrioritySelectOptions()
     }
@@ -141,7 +140,7 @@ class TaskForm {
             <label for="task-description">Description:</label>
             <textarea id="task-description"></textarea>
 
-            <button class="confirm-task-form close-popup">${this.getConfirmButtonText()}</button>
+            <button class="confirm-task-form close-popup"></button>
             <button class="cancel-task-form close-popup">Cancel</button>
         `
         this.nameInput = taskCreationForm.querySelector('#task-name-input')
@@ -168,17 +167,14 @@ class TaskForm {
         this.taskDescription.value = ''
     }
 
-    getConfirmButtonText() {
-        let confirmText = ''
-        switch (this.type) {
-            case 'add':
-                confirmText = 'Add'
-                break
-            case 'edit':
-                confirmText = 'Edit'
-                break
-        }
+    setConfirmButtonText(newText) {
+        this.confirmButton.textContent = newText
+    }
+}
 
-        return confirmText
+class TaskCreationForm extends TaskForm {
+    constructor() {
+        super()
+        this.setConfirmButtonText('Add')
     }
 }

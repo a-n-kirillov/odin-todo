@@ -136,6 +136,15 @@ export default class ListView {
         })
     }
 
+    bindDeleteTaskButton(action) {
+        this.listElement.addEventListener('click', e => {
+            const potentiallyPressedDeleteButton = e.target.closest('.delete-task') 
+            if (!potentiallyPressedDeleteButton) return
+            const pressedTask = potentiallyPressedDeleteButton.closest('li')
+            action(pressedTask.id)
+        })
+    }
+
     bindCompletionCheckbox(action) {
         this.listElement.addEventListener('click', e => {
             if (!e.target.classList.contains('task-completion')) return;

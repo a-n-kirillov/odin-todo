@@ -9,6 +9,7 @@ export default class TaskController {
         this.setupAddTaskButton()
         this.setupCompletionCheckbox()
         this.setupEditTaskButton()
+        this.setupDeleteTaskButton()
     }
 
     renderTasks() {
@@ -32,6 +33,11 @@ export default class TaskController {
         this.renderTasks()
     }
 
+    deleteTask(id) {
+        this.model.currentList.removeToDo(id)
+        this.renderTasks()
+    }
+
     changeCompletion(taskId, newState) {
         const taskBeingChanged = this.model.currentList.getTask(taskId)
         taskBeingChanged.setCompletionState(newState)
@@ -48,5 +54,9 @@ export default class TaskController {
 
     setupEditTaskButton() {
         this.view.bindEditTaskButton((id, newName, newDueDate, newPriority, newDescription) => this.editTask(id, newName, newDueDate, newPriority, newDescription))
+    }
+
+    setupDeleteTaskButton() {
+        this.view.bindDeleteTaskButton(id => this.deleteTask(id))
     }
 }

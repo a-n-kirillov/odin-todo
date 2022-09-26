@@ -1,4 +1,3 @@
-import ListView from "../ui/ListView";
 import getUniqueId from '../utility/idGenerator'
 import ToDoItem from '../logic/ToDoItem'
 

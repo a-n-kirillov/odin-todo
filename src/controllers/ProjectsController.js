@@ -1,6 +1,4 @@
-import ToDoApp from "../logic/ToDoApp"
 import ToDoList from "../logic/ToDoList"
-import ProjectsView from "../ui/ProjectsView"
 import getUniqueId from "../utility/idGenerator"
 
 export default class ProjectsController {

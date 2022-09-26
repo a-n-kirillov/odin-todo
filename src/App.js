@@ -1,6 +1,5 @@
 import { UI } from "./ui/UI";
 import ProjectsController from "./controllers/ProjectsController";
-import ToDoApp from "./logic/ToDoApp";
 import TaskController from "./controllers/TasksController";
 import Storage from "./persistance/storage";
 

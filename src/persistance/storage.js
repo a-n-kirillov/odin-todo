@@ -1,20 +1,5 @@
 import ToDoApp from '../logic/ToDoApp'
 
-const proxyChangeHandler = {
-    get: (target, key) => {
-      if(typeof target[key] === "object" && target[key] !== null) {
-        return new Proxy(target[key], handler)
-      }
-  
-      return target[key]
-    },
-    set: (target, prop, value) => {
-        target[prop] = value
-        console.log("A change was made!")
-      return true
-    }
-  }
-
 export default class Storage {
     constructor(localStorageKey) {
         this.localStorageKey = localStorageKey
